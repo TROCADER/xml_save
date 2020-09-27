@@ -10,38 +10,84 @@ namespace xml_save
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Player));
 
-            System.Console.WriteLine("Do you want to open or create file?\n" + "Enter O to open or N to create\n" + "If the file already exists and you create a new, the previous data will be overwritten\n\n");
+            string playerHp;
+            string playerMp;
+            string playerSp;
+
+            int playerHpInt;
+            int playerMpInt;
+            int playerSpInt;
+
+            bool success;
+
+            Console.WriteLine("Do you want to open or create file?\n" + "Enter O to open or N to create\n" + "If the file already exists and you create a new, the previous data will be overwritten\n\n");
             string playerChoose = Console.ReadLine().Trim().ToUpper();
+            Console.Clear();
 
             while (playerChoose != "O" && playerChoose != "N")
             {
-                System.Console.WriteLine("Please enter a vaild option!");
+                Console.WriteLine("Please enter a vaild option!\n\n" + 
+                "Do you want to open or create file?\n" + 
+                "Enter O to open or N to create\n" + 
+                "If the file already exists and you create a new, the previous data will be overwritten\n\n");
                 playerChoose = Console.ReadLine().Trim().ToUpper();
+                Console.Clear();
             }
 
             if (playerChoose == "O")
             {
-                
+                using (FileStream myFile = File.Open(@"playerStats.xml", FileMode.OpenOrCreate))
+                {
+                    Player player = (Player) serializer.Deserialize(myFile);
+                    Console.WriteLine("Player HP: " + player.hp);
+                    Console.WriteLine("Player MP: " + player.mp);
+                    Console.WriteLine("Player SP: " + player.sp);
+                }
             }
 
             else if (playerChoose == "N")
             {
-            System.Console.WriteLine("How much HP does the player have?");
-            string playerHp = Console.ReadLine();
-            bool success = int.TryParse(playerHp, out int playerHpInt);
+            Console.WriteLine("How much HP does the player have?");
+            playerHp = Console.ReadLine();
+            success = int.TryParse(playerHp, out playerHpInt);
+            Console.Clear();
+            while (success == false)
+            {
+                Console.WriteLine("How much HP does the player have?");
+                playerHp = Console.ReadLine();
+                success = int.TryParse(playerHp, out playerHpInt);
+                Console.Clear();
+            }
             
-            System.Console.WriteLine("How much MP does the player have?");
-            string playerMp = Console.ReadLine();
-            bool success2 = int.TryParse(playerMp, out int playerMpInt);
+            Console.WriteLine("How much MP does the player have?");
+            playerMp = Console.ReadLine();
+            success = int.TryParse(playerMp, out playerMpInt);
+            Console.Clear();
+            while (success == false)
+            {
+                Console.WriteLine("How much MP does the player have?");
+                playerMp = Console.ReadLine();
+                success = int.TryParse(playerMp, out playerMpInt);
+                Console.Clear();
+            }
 
-            System.Console.WriteLine("How much SP does the player have?");
-            string playerSp = Console.ReadLine();
-            bool success3 = int.TryParse(playerSp, out int playerSpInt);
+            Console.WriteLine("How much SP does the player have?");
+            playerSp = Console.ReadLine();
+            success = int.TryParse(playerSp, out playerSpInt);
+            Console.Clear();
+            while (success == false)
+            {
+                Console.WriteLine("How much SP does the player have?");
+                playerSp = Console.ReadLine();
+                success = int.TryParse(playerSp, out playerSpInt);
+                Console.Clear();
+            }
+
+            Console.WriteLine("Player HP: " + playerHp);
+            Console.WriteLine("Player MP: " + playerMp);
+            Console.WriteLine("Player SP: " + playerSp);
 
             Player player = new Player(playerHpInt, playerMpInt, playerSpInt);
-
-            // Console.WriteLine(player.hp + " " + player.mp + " " + player.sp);
-
             FileStream myFile = File.Open("playerStats.xml", FileMode.OpenOrCreate);
 
             serializer.Serialize(myFile, player);
@@ -49,7 +95,7 @@ namespace xml_save
             myFile.Close();
             }
 
-            Console.WriteLine("Press any key to exit");
+            Console.WriteLine("\n\nPress any key to exit");
             Console.ReadKey();
         }
     }

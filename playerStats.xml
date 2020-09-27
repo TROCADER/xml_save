@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Player xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <hp>666</hp>
-  <mp>666</mp>
-  <sp>666</sp>
+  <hp>12</hp>
+  <mp>10</mp>
+  <sp>13</sp>
 </Player>
